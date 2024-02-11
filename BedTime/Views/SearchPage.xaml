@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BedTime.Views.SearchPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:font="clr-namespace:BedTime"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title="SearchPage">
+    <Page.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource PageBackgroundColor}" StatusBarStyle="Default" />
+    </Page.Behaviors>
+    <Grid RowDefinitions="0.9*,0.1*">
+        <Grid
+            Grid.Row="1"
+            Margin="0,0,0,10"
+            RowSpacing="2">
+            <BoxView
+                Margin="15,0,15,20"
+                BackgroundColor="Transparent"
+                CornerRadius="30"
+                HeightRequest="80"
+                Color="{StaticResource MyDarkBlue}" />
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,*">
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource Key=GoogleFont}"
+                    Text="{x:Static font:IconFont.Home}"
+                    TextColor="White">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToHomePageAsyncCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource FeaturedPlanetHeaderStyle}"
+                    Text="Główna">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToHomePageAsyncCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource Key=GoogleFont}"
+                    Text="{x:Static font:IconFont.Favorite}"
+                    TextColor="White">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToFavoritesPageAsyncCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource FeaturedPlanetHeaderStyle}"
+                    Text="Ulubione">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToFavoritesPageAsyncCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource FeaturedPlanetHeaderStyle}"
+                    Text="Szukaj">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToSearchPageAsyncCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource Key=GoogleFont}"
+                    Text="{x:Static font:IconFont.Search}"
+                    TextColor="White">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToSearchPageAsyncCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

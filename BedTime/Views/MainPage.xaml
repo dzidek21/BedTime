@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BedTime.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:font="clr-namespace:BedTime"
+    xmlns:model="clr-namespace:BedTime.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:BedTime.ViewModel"
+    x:DataType="vm:MainPageViewModel"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
+
+    <Page.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource PageBackgroundColor}" StatusBarStyle="Default" />
+    </Page.Behaviors>
+
+
+    <Grid RowDefinitions="0.9*,0.1*">
+        <ScrollView>
+            <StackLayout>
+                <Label
+                    Margin="25,25,25,5"
+                    FontFamily="MontserratBold"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="Bajki na dobranoc"
+                    TextColor="{StaticResource LightTextColor}" />
+                
+
+                <StackLayout>
+                    <!--  Najnowsze  -->
+                    <StackLayout>
+                        
+                        <Label
+                            Margin="15"
+                            Style="{StaticResource FeaturedPlanetHeaderStyle}"
+                            Text="Najnowsze"
+                            VerticalOptions="End" />
+                        <ActivityIndicator  IsRunning="{Binding IsBusy}" Color="White" IsVisible="{Binding IsBusy}" />
+                        <CollectionView
+                            Margin="15,0,0,0"
+                            x:DataType="vm:MainPageViewModel"
+                            HeightRequest="310"
+                            ItemsSource="{Binding FairTails}">
+                            
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="18" Orientation="Horizontal" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:TailModel">
+                                    <Grid>
+                                        
+                                        <Border
+                                            HeightRequest="310"
+                                            StrokeThickness="0"
+                                            WidthRequest="180">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="24" />
+                                            </Border.StrokeShape>
+                                            
+
+                                            <Grid RowDefinitions="auto,*">
+                                                
+                                                <Image
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
+                                                    Aspect="AspectFill"
+                                                    HorizontalOptions="Fill"
+                                                    Source="{Binding ImageUrl}"
+                                                    VerticalOptions="Fill">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=GoToDetailPageCommand}" CommandParameter="{Binding .}" />
+                                                        
+                                                    </Image.GestureRecognizers>
+                                                    
+                                                </Image>
+                                                <BoxView
+                                                    Grid.Row="1"
+                                                    HeightRequest="100"
+                                                    Opacity="0.6"
+                                                    VerticalOptions="End">
+                                                    <BoxView.Background>
+                                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                            <GradientStop Offset="0" Color="Transparent" />
+                                                            <GradientStop Offset="1" Color="#CC000000" />
+                                                        </LinearGradientBrush>
+                                                    </BoxView.Background>
+                                                </BoxView>
+                                                
+
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Margin="12,0,3,8"
+                                                    FontSize="19"
+                                                    Style="{StaticResource FeaturedPlanetHeaderStyle}"
+                                                    Text="{Binding Title}"
+                                                    VerticalOptions="End" />
+                                                
+
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        
+                    </StackLayout>
+
+                    <!--  polecane  -->
+                    <StackLayout>
+                        
+                        <Label
+                            Margin="15"
+                            Style="{StaticResource FeaturedPlanetHeaderStyle}"
+                            Text="Polecane"
+                            VerticalOptions="End" />
+                        <ActivityIndicator IsRunning="{Binding IsBusy}" Color="White" IsVisible="{Binding IsBusy}" />
+                        <CollectionView
+                            Margin="15,0,0,0"
+                            x:DataType="vm:MainPageViewModel"
+                            HeightRequest="220"
+                            ItemsSource="{Binding MostLiked}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="18" Orientation="Horizontal" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:TailModel">
+                                    <Grid>
+                                        <Border
+                                            HeightRequest="220"
+                                            StrokeThickness="0"
+                                            WidthRequest="150">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="24" />
+                                            </Border.StrokeShape>
+                                            <Grid RowDefinitions="auto,*">
+                                                <Image
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
+                                                    Aspect="AspectFill"
+                                                    HorizontalOptions="Fill"
+                                                    Source="{Binding ImageUrl}"
+                                                    VerticalOptions="Fill" >
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=GoToDetailPageCommand}" CommandParameter="{Binding .}" />
+
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                                <BoxView
+                                                    Grid.Row="1"
+                                                    HeightRequest="100"
+                                                    Opacity="0.6"
+                                                    VerticalOptions="End">
+                                                    <BoxView.Background>
+                                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                            <GradientStop Offset="0" Color="Transparent" />
+                                                            <GradientStop Offset="1" Color="#CC000000" />
+                                                        </LinearGradientBrush>
+                                                    </BoxView.Background>
+                                                </BoxView>
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Margin="12,0,3,15"
+                                                    FontSize="15"
+                                                    Style="{StaticResource FeaturedPlanetHeaderStyle}"
+                                                    Text="{Binding Title}"
+                                                    VerticalOptions="End" />
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                    </StackLayout>
+
+
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+        <Grid
+            Grid.Row="1"
+            Margin="0,0,0,10"
+            RowSpacing="2">
+            <BoxView
+                Margin="15,0,15,20"
+                BackgroundColor="Transparent"
+                CornerRadius="30"
+                HeightRequest="80"
+                Color="{StaticResource MyDarkBlue}" />
+            <Grid
+                x:DataType="vm:MainPageViewModel"
+                ColumnDefinitions="*,*,*"
+                RowDefinitions="*,*">
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource Key=GoogleFont}"
+                    Text="{x:Static font:IconFont.Home}"
+                    TextColor="White">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToHomePageCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource FeaturedPlanetHeaderStyle}"
+                    Text="Główna">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToHomePageCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource Key=GoogleFont}"
+                    Text="{x:Static font:IconFont.Favorite}"
+                    TextColor="White">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToFavoritesPageCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource FeaturedPlanetHeaderStyle}"
+                    Text="Ulubione">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToFavoritesPageCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource FeaturedPlanetHeaderStyle}"
+                    Text="Szukaj">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToSearchPageCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    Style="{x:StaticResource Key=GoogleFont}"
+                    Text="{x:Static font:IconFont.Search}"
+                    TextColor="White">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToSearchPageCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </Grid>
+    </Grid>
+
+
+</ContentPage>
