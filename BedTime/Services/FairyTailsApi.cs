@@ -6,7 +6,8 @@ namespace BedTime.Services
 {
     public class FairyTailsApi : IApiRepo
     {
-        private const string URL = "http://fairytails.somee.com/api/FairyTails";
+        //Put API URL here
+        private const string URL = "";
         private readonly HttpClient _httpClient;
         public FairyTailsApi(HttpClient httpClient)
         {
