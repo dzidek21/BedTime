@@ -5,18 +5,19 @@ using BedTime.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using MvvmHelpers;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BedTime.ViewModel
 {
-    public partial class MainPageViewModel : ObservableObject
+    public partial class MainPageViewModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     {
         private readonly IFairTalesRepository _fairTalesRepository;
         private readonly IApiRepo _apiRepo;
         public MainPageViewModel(IFairTalesRepository fairTalesRepository, IApiRepo apiRepo)
         {
             
-            FairTails=new ObservableCollection<TailModel>();
+            FairTails=new ObservableRangeCollection<TailModel>();
             MostLiked=new ObservableCollection<TailModel>();
             _fairTalesRepository = fairTalesRepository;
             _apiRepo = apiRepo;
@@ -26,7 +27,9 @@ namespace BedTime.ViewModel
         }
 
         [ObservableProperty]
-        ObservableCollection<TailModel> fairTails;
+        ObservableRangeCollection<TailModel> fairTails;
+
+        
 
         [ObservableProperty]
         ObservableCollection<TailModel> mostLiked;
@@ -46,7 +49,10 @@ namespace BedTime.ViewModel
             if (InternetAcsses())
             {
                 IsBusy = true;
-                FairTails=new ObservableCollection<TailModel>( await _apiRepo.GetAllTails());
+                var tails=new ObservableRangeCollection<TailModel>( await _apiRepo.GetAllTails());
+                var sorted=tails.OrderByDescending(x => x.Id);
+               
+                FairTails.AddRange(sorted);
                 MostLiked = new ObservableCollection<TailModel>(FairTails.OrderByDescending(x => x.LikeCount));
                 IsBusy = false;
                 if(FairTailsSearchRsult.Count>0)

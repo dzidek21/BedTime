@@ -9,4 +9,10 @@ public partial class SearchPage : ContentPage
 		InitializeComponent();
 		BindingContext=vm;
 	}
+
+    private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+		var vm = (SearchPageViewModel)BindingContext;
+		vm.SearchTextChanged(e.NewTextValue);
+    }
 }
