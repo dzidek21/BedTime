@@ -4,12 +4,98 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:font="clr-namespace:BedTime"
+    xmlns:model="clr-namespace:BedTime.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    Title="SearchPage">
+    xmlns:vm="clr-namespace:BedTime.ViewModel"
+    Title="SearchPage"
+    x:DataType="vm:SearchPageViewModel">
     <Page.Behaviors>
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource PageBackgroundColor}" StatusBarStyle="Default" />
     </Page.Behaviors>
+
     <Grid RowDefinitions="0.9*,0.1*">
+        <Grid Grid.Row="0" RowDefinitions="80,*">
+
+            <!--<Entry
+                Grid.Row="0"
+                Margin="15,20,15,0"
+                BackgroundColor="Transparent"
+
+                FontSize="18"
+                Placeholder="Wyszukaj"
+                TextChanged="Entry_TextChanged"
+                TextColor="White" />
+            <Border Margin="15" HeightRequest="40" />-->
+            <SearchBar
+                Grid.Row="0"
+                FontSize="18"
+                Placeholder="Wyszukaj"
+                TextChanged="Entry_TextChanged"
+                TextColor="White" />
+
+
+
+            <CollectionView Grid.Row="1" ItemsSource="{Binding SearchedTails}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        HorizontalItemSpacing="5"
+                        Orientation="Vertical"
+                        Span="2"
+                        VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:TailModel">
+                        <Grid>
+                            <Border
+                                HeightRequest="180"
+                                StrokeThickness="0"
+                                WidthRequest="180">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="24" />
+                                </Border.StrokeShape>
+                                <Grid RowDefinitions="auto,*">
+                                    <Image
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Aspect="AspectFill"
+                                        HorizontalOptions="Fill"
+                                        Source="{Binding ImageUrl}"
+                                        VerticalOptions="Fill">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageViewModel}}, Path=GoToDetailPageCommand}" CommandParameter="{Binding .}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <BoxView
+                                        Grid.Row="1"
+                                        HeightRequest="100"
+                                        Opacity="0.6"
+                                        VerticalOptions="End">
+                                        <BoxView.Background>
+                                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                                <GradientStop Offset="0" Color="Transparent" />
+                                                <GradientStop Offset="1" Color="#CC000000" />
+                                            </LinearGradientBrush>
+                                        </BoxView.Background>
+                                    </BoxView>
+                                    <Label
+                                        Grid.Row="1"
+                                        Margin="12,0,3,8"
+                                        FontSize="19"
+                                        Style="{StaticResource FeaturedPlanetHeaderStyle}"
+                                        Text="{Binding Title}"
+                                        VerticalOptions="End" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+
+
+        </Grid>
+        <!--  toolbar  -->
         <Grid
             Grid.Row="1"
             Margin="0,0,0,10"
@@ -31,7 +117,7 @@
                     Text="{x:Static font:IconFont.Home}"
                     TextColor="White">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoToHomePageAsyncCommand}" />
+                        <TapGestureRecognizer Command="{Binding GoToHomePageCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
 
@@ -43,7 +129,7 @@
                     Style="{x:StaticResource FeaturedPlanetHeaderStyle}"
                     Text="Główna">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoToHomePageAsyncCommand}" />
+                        <TapGestureRecognizer Command="{Binding GoToHomePageCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
 
@@ -56,7 +142,7 @@
                     Text="{x:Static font:IconFont.Favorite}"
                     TextColor="White">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoToFavoritesPageAsyncCommand}" />
+                        <TapGestureRecognizer Command="{Binding GoToFavoritesPageCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
                 <Label
@@ -67,7 +153,7 @@
                     Style="{x:StaticResource FeaturedPlanetHeaderStyle}"
                     Text="Ulubione">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoToFavoritesPageAsyncCommand}" />
+                        <TapGestureRecognizer Command="{Binding GoToFavoritesPageCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
                 <Label
@@ -78,7 +164,7 @@
                     Style="{x:StaticResource FeaturedPlanetHeaderStyle}"
                     Text="Szukaj">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoToSearchPageAsyncCommand}" />
+                        <TapGestureRecognizer Command="{Binding GoToSearchPageCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
 
@@ -91,7 +177,7 @@
                     Text="{x:Static font:IconFont.Search}"
                     TextColor="White">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoToSearchPageAsyncCommand}" />
+                        <TapGestureRecognizer Command="{Binding GoToSearchPageCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
             </Grid>
